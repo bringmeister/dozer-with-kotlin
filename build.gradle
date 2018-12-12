@@ -1,0 +1,60 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:1.3.11"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:1.3.11"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.jetbrains.kotlin.plugin.noarg"
+
+group = 'de.bringmeister'
+version = '0.1.0'
+sourceCompatibility = 1.8
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+    }
+}
+
+dependencies {
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.jetbrains.kotlin:kotlin-reflect"
+    compile "com.github.dozermapper:dozer-core:6.1.0"
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2'
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+}
+
+noArg {
+    annotation("de.bringmeister.dozer.NoArgConstructor")
+}
